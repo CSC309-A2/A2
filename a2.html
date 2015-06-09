@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <div id="start_page">
+            <h2>TAP TAP BUG</h2>
+            
+            <p>Level: 
+                1<input type="radio" name="radio_button" id="level1" unchecked onMouseDown="this.__chk = this.checked" onClick="select_one()"> 
+                2<input type="radio" name="radio_button" id="level2" unchecked onMouseDown="this.__chk = this.checked" onClick="select_one()"></p>
+            
+            <input type = "button" id="start_button" onclick="start_game()" value="START">
+            
+            <p>High score: <input type="text" id="high_score" size="5"></p>
+        </div>
+        
+        <div id="game_page">
+            <div id="textbox">
+                <p class="timer">&nbsp; <span id="showmns">00</span>:<span id="showscs">00</span></p>
+                <p class="pause"><input type="button" id="pause_button" onclick="pause_game()" value="PAUSE"></p>
+                <p class="score">Score: <input type="text" id="score" size="5"></p>
+                                                                    </div>
+            <div class="line_separator"></div>
+            
+        </div>
+    </body>
+</html>
