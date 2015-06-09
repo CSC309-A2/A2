@@ -1,0 +1,43 @@
+#start_page{
+    border: 3px solid blue;
+    height: 500px;
+    width: 500px;
+    text-align: center;
+    position: relative;
+}
+            
+#game_page{
+    border: 3px solid orange;
+    height: 650px;
+    width: 400px;
+    clear: both;
+}
+
+
+.line_separator{
+    position: absolute;
+    width:400px;
+    border-bottom:2px solid black;
+    height:1px; 
+    padding-top:5px;
+    margin-top:50px;
+    margin-bottom:5px;
+}
+
+.timer{
+    float: left;
+    width: 33.33333%;
+    text-align:left;
+}
+
+.pause{
+    float: left;
+    width: 33.33333%;
+    text-align: center;
+}
+
+.score{
+    float: right;
+    width: 33.33333%;
+    text-align:right;
+}
