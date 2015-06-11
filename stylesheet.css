@@ -25,7 +25,8 @@
     margin-bottom:5px;
 }
 
-.countdown{
+#timer{
+    padding-top: 15px;
     float: left;
     width: 33.33333%;
     text-align:left;
