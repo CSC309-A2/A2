@@ -16,7 +16,7 @@ function start_game(start_button){
 paused = false;
 
 // set minutes
-var mins = 1;
+var mins = 0.1;
 // calculate the seconds 
 var secs = mins * 60;
 var t = 0;
@@ -37,13 +37,13 @@ function Decrement() {
             seconds.value = getseconds();
         }
         secs--;
-        t = setTimeout('Decrement()',1000);
         if (secs <= 0){
             setTimeout(function () {
                     game_page.style.display = 'none';
                     start_page.style.display = 'block';
-            }, 1000);
+            }, 2000);
         }
+        t = setTimeout('Decrement()',1000);
     }
 }
 
