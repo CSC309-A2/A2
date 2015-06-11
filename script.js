@@ -11,40 +11,70 @@ function start_game(start_button){
     start_page.style.display = 'none';
 }
 
+/* FUNCTIONS FOR TIMER */
+
+paused = false;
+
+// set minutes
+var mins = 1;
+// calculate the seconds 
+var secs = mins * 60;
 var t = 0;
+var flagTimer='resume';
 
-function pause_game(pause_button){
-    var elem = document.getElementById('pause_button');
-    if (elem.value=="PAUSE"){
-        clearTimeout(t);
-        elem.value = "RESUME";
-    }
-    else {
-        elem.value = "PAUSE";
-    }
+function countdown() {
+    t = setTimeout('Decrement()',1000);
 }
-
-
-function countdownTimer(secs) {
-    var game_page = document.getElementById('game_page');
-    var start_page = document.getElementById('start_page');
-    var seconds = secs;
-    //var mins = minutes;
-    function tick() {
-        var counter = document.getElementById("timer");
-        seconds--;
-        counter.innerHTML = 
-"0" + ":" + (seconds < 10 ? "0" : "") + String(seconds);
-        if(seconds > 0) {
-            t = setTimeout(tick, 1000);
+function Decrement() {
+    if (document.getElementById) {
+        minutes = document.getElementById("minutes");
+        seconds = document.getElementById("seconds");
+        // if less than a minute remaining
+        if (seconds < 59) {
+            seconds.value = secs;
+        } else {
+            minutes.value = getminutes();
+            seconds.value = getseconds();
         }
-        else {
-                setTimeout(function () {
+        secs--;
+        t = setTimeout('Decrement()',1000);
+        if (secs <= 0){
+            setTimeout(function () {
                     game_page.style.display = 'none';
                     start_page.style.display = 'block';
-                }, 1000);
-            }
+            }, 1000);
         }
-    tick();
+    }
 }
+
+function getminutes() {
+    // minutes is seconds divided by 60, rounded down
+    mins = Math.floor(secs / 60);
+    return mins;
+}
+
+function getseconds() {
+    // take mins remaining (as seconds) away from total seconds remaining
+    return secs-Math.round(mins * 60);
+}
+
+function pause() { 
+  if(flagTimer=='resume'){
+    clearTimeout(t);
+    t = 0;
+    document.getElementById('Pause').value="RESUME";
+    flagTimer='pause';
+  }
+  else {
+    flagTimer='resume';
+    document.getElementById('Pause').value="PAUSE";
+    resume();
+  }
+
+}
+
+function resume() {
+    t = setTimeout('Decrement()',1000);
+}
+
 
