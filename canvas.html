@@ -13,6 +13,15 @@ Your browser does not support the HTML5 canvas tag.
 </div>
 <script>
 	
+	//NEXT: figure out why it getting faster
+	//destroy the food
+	//destroy ants
+	//click function
+	//add score
+	//random coordinaye
+	//different speed
+	//level 2
+
 	var canvas = document.getElementById('canvas');
 
 	var context = canvas.getContext('2d');
@@ -109,6 +118,11 @@ Your browser does not support the HTML5 canvas tag.
 
 		var minDistance = findNearestFood(this.xPos);
 
+
+			//get a variable of negative sign
+			//get array of positive and negative sign
+			//randomly times it to the postion of the x, 
+			//then, if statement, if the y hasnt reach 300 yet, and its not the edge of the canvas, then keep moving, if its the edge of the canvas, then turn (times negative), if the y value reach 300, then go the nearest food!
 			//speed can be changed by changing the value of the coordinates below
 			//go right
 			if (this.xPos < minDistance.x){
