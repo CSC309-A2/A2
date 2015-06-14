@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div id="canvasesdiv" style="position:relative; width:400px; height:600px">
+<canvas id="canvas" width="400" height="600" style="border:1px solid #000000; z-index: 1;
+position:absolute; left:0px; top:0px; ">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+<canvas id="canvas2" width="400" height="600" style="border:1px solid #000000; z-index: 1;
+position:absolute; left:0px; top:0px;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+</div>
+<script>
+	
+	var canvas = document.getElementById('canvas');
+
+	var context = canvas.getContext('2d');
+
+	var canvas2 = document.getElementById('canvas2');
+
+	var context2 = canvas2.getContext('2d');
+
+	// shim layer with setTimeout fallback
+	window.requestAnimFrame = (function(){
+  	return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            function( callback ){
+            window.setTimeout(callback, 1000000 );
+          };
+})();
+
+	var food1Pos = {
+		'x' : 50,		
+		'y' : 500
+	};
+
+	var food1 = function(){
+
+		context2.beginPath();
+		context2.arc(food1Pos.x, food1Pos.y, 20, 0, 2 * Math.PI);
+		context2.fillStyle = 'black';
+		context2.fill();
+		context2.save();
+
+	};
+
+	var food2Pos = {
+		'x' : 200,		
+		'y' : 500
+	};
+
+	var food2 = function(){
+
+		context2.beginPath();
+		context2.arc(food2Pos.x, food2Pos.y, 20, 0, 2 * Math.PI);
+		context2.fillStyle = 'black';
+		context2.fill();
+		context2.save();
+
+	};
+
+	var food3Pos = {
+		'x' : 350,		
+		'y' : 500
+	};
+
+	var food3 = function(){
+
+		context2.beginPath();
+		context2.arc(food3Pos.x, food3Pos.y, 20, 0, 2 * Math.PI);
+		context2.fillStyle = 'black';
+		context2.fill();
+		context2.save();
+
+	};
+
+	food1();
+	food2();
+	food3();
+
+	//--------------------BUG---------------------------------//
+
+	var bugArr = new Array();
+	var maxBug = 10;
+	var angle = 0;
+
+	var foodCoord = new Array();
+	foodCoord.push(new foodCoordinates(food1Pos.x, food1Pos.y));
+	foodCoord.push(new foodCoordinates(food2Pos.x, food2Pos.y));
+	foodCoord.push(new foodCoordinates(food3Pos.x, food3Pos.y));
+
+	var colors = ["#000000", "#A00000", "#FF6600"];
+
+	function Bug(xPos, yPos, radius, speed, colour){
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.radius = radius;
+		//this.width = width;
+		this.speed = speed;
+		this.colour = colors[Math.floor(Math.random() * colors.length)];
+
+		this.counter = 0;
+	}
+
+	Bug.prototype.update = function() {
+		
+
+		var minDistance = findNearestFood(this.xPos);
+
+			//speed can be changed by changing the value of the coordinates below
+			//go right
+			if (this.xPos < minDistance.x){
+				this.xPos+=1 ;
+			} 
+
+			//go left
+			else{
+				this.xPos-=1 ;
+			}
+
+
+			if (this.yPos < minDistance.y){
+			this.yPos+=1 ;
+			}
+			context.beginPath();
+		context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
+		context.closePath();
+
+		context.fillStyle = this.colour;
+		//later -- set up speed based on color!!!!
+		context.fill();
+
+		//requestAnimFrame(update);
+	};
+
+	function setupBugs(){
+		for (var i = 0; i < 1; i++) {
+			var randomX = Math.floor(Math.random()*399);
+			var Y = -20;
+			var radius = 5;
+			var speed = 1;
+			
+			var theBug = new Bug(randomX, Y, radius, speed);
+			bugArr.push(theBug);
+
+		};
+		drawAndUpdate();
+	}
+	setupBugs();
+
+	// var bugPos = {
+	// 	'x' :  Math.floor(Math.random()*399),		
+	// 	'y' : -20
+	// };
+
+	
+
+	function drawAndUpdate(){
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		for (var i = 0; i < bugArr.length; i++) {
+			var mybugs = bugArr[i];
+			mybugs.update();
+			//requestAnimFrame(drawAndUpdate);
+			//setTimeout(mybugs.update, 100);
+	}
+	
+	requestAnimFrame(drawAndUpdate);
+
+	//
+}
+setInterval(setupBugs, 5000);
+	
+
+	function foodCoordinates(x, y){
+		this.x = x;
+		this.y = y;
+		
+	}
+
+	//to retrieve for loops and foodCoord[].x or y
+	
+
+	//find the nearest food, only by its x coordinates from the bug
+	//we can modify for y later (??)
+	function findNearestFood(bugX){
+		 
+
+		var dist = 500;
+		//the coordinates of the food with min distance
+		var minCoord = null;
+		//var o = foodCoord[0].x;
+
+		for (var i = 0; i < foodCoord.length; i++) {
+			if ((Math.abs(bugX - foodCoord[i].x)) < dist) {
+				dist = bugX - foodCoord[i].x;
+				minCoord = foodCoord[i];
+			}
+		};
+		return minCoord;
+	}
+
+	
+	
+	
+	
+	
+</script>
+
+</body>
+</html>
