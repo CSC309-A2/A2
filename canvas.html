@@ -2,45 +2,80 @@
 <html>
 <body>
 <div id="canvasesdiv" style="position:relative; width:400px; height:600px">
-<canvas id="canvas" width="400" height="600" style="border:1px solid #000000; z-index: 0;
-position:absolute; left:0px; top:0px; ">
-Your browser does not support the HTML5 canvas tag.
-</canvas>
+
 <canvas id="canvas2" width="400" height="600" style="border:1px solid #000000; z-index: 0;
 position:absolute; left:0px; top:0px;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+<canvas id="canvas" width="400" height="600" style="border:1px solid #000000; z-index: 0;
+position:absolute; left:0px; top:0px; ">
 Your browser does not support the HTML5 canvas tag.
 </canvas>
 </div>
 <script>
 	
-	//FIGURE OUT WHY ITS GETTING FASTER!!!
+		//---NOTES-----
 
-	//destroy the food
+	// NEED TO FIGURE OUT WHY ITS GETTING FASTER!!!
+
+	//destroy the food -- DONE
 	//destroy ants
 	//click function
 	//add score
-	//random coordinates
+	
 	//different speed
 
 	//level 2
-
-	var canvas = document.getElementById('canvas');
-
-	var context = canvas.getContext('2d');
 
 	var canvas2 = document.getElementById('canvas2');
 
 	var context2 = canvas2.getContext('2d');
 
+
+	var canvas = document.getElementById('canvas');
+
+	var context = canvas.getContext('2d');
+
+	
+
 	// shim layer with setTimeout fallback
-	window.requestAnimFrame = (function(){
-  	return  window.requestAnimationFrame       ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            function( callback ){
-            window.setTimeout(callback, 1000000 );
-          };
-})();
+	(function() {
+	// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+	// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+	// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+	// MIT license
+
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+ 
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+ 
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+
+//         canvas.addEventListener("mousedown", function(event){
+// 		var pos = getElementPosition(canvas);
+// 		alert('x'+pos.x);
+// });
+
+	canvas.addEventListener("touchstart", tap);
+	canvas.addEventListener("mousedown", tap);
+}());
 
 	var foodCoord = new Array();
 
@@ -122,6 +157,8 @@ Your browser does not support the HTML5 canvas tag.
 	var maxBug = 10;
 	var angle = 0;
 
+	var request;
+
 
 	var colors = ["#000000", "#A00000", "#FF6600"];
 
@@ -159,20 +196,20 @@ Your browser does not support the HTML5 canvas tag.
 
 
 			if (this.xPos < (minDistance.x +20)){
-				this.xPos+=1 ;
+				this.xPos+=0.5 ;
 			} 
 
 			//go left
 			else{
-				this.xPos-=1 ;
+				this.xPos-=0.5 ;
 			}
 
 
 			if (this.yPos < (minDistance.y +20)){
-			this.yPos+=1 ;
+			this.yPos+=0.5 ;
 			}
 			else{
-				this.yPos-=1;
+				this.yPos-=0.5;
 			}
 		// }
 			context.beginPath();
@@ -210,14 +247,6 @@ Your browser does not support the HTML5 canvas tag.
 			drawAndUpdate();
 	}
 
-	
-
-	// var bugPos = {
-	// 	'x' :  Math.floor(Math.random()*399),		
-	// 	'y' : -20
-	// };
-
-	
 
 	function drawAndUpdate(){
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -228,13 +257,15 @@ Your browser does not support the HTML5 canvas tag.
 			//setTimeout(mybugs.update, 100);
 	}
 	
-	requestAnimFrame(drawAndUpdate);
+	request = requestAnimationFrame(drawAndUpdate);
 	//if it reach destination coordinates, stop the animation frame??
 
 	//
 }
 setupBugs();
 setInterval(setupBugs, 3000);
+
+
 //stop interval after 60 sec?or after the foods gone!
 	
 
@@ -302,9 +333,6 @@ setInterval(setupBugs, 3000);
   		return x >= min && x <= max;
 	}
 
-	//NEXT -- draw the food without overlap, use range of canvas width!!!
-
-
 	///-----------------TAP--------------///
 	
 	//modify this
@@ -330,6 +358,10 @@ setInterval(setupBugs, 3000);
 		
 		for (i = 0; i < bugArr.length; i += 1) {
 			if (bugArr[i] === bug) {
+				setTimeout(function(){
+    cancelRequestAnimFrame(request);                
+}, 1*1000)
+				bugArr[i];
 				bugArr[i] = null;
 				bugArr.splice(i, 1);
 				break;
@@ -346,7 +378,7 @@ setInterval(setupBugs, 3000);
 	}
 
 	var getFrameWidth = function () {
-			return that.width / numberOfFrames;
+			return that.width ;
 		};
 		
 		
@@ -368,22 +400,28 @@ setInterval(setupBugs, 3000);
 
 		//----==------//
 
+
 		for (i = 0; i < bugArr.length; i += 1) {
 		
-			// Distance between tap and coin
-			dist = distance({
-				x: (bugArr[i].x + bugArr[i].getFrameWidth() / 2 * bugArr[i].scaleRatio),
-				y: (bugArr[i].y + bugArr[i].getFrameWidth() / 2 * bugArr[i].scaleRatio)
-			}, {
-				x: loc.x,
-				y: loc.y
-			});
-			
-			// Check for tap collision with coin		
-			if (dist < bugArr[i].getFrameWidth() / 2 * bugArr[i].scaleRatio) {
+
+			if (between(tapX, bugArr[i].xPos-10, bugArr[i].xPos+20) && between(tapY, bugArr[i].yPos-10, bugArr[i].yPos+20)){
 				bugToDestroy.push(bugArr[i]);
 			}
+			// Distance between tap and coin
+			// dist = distance({
+			// 	x: (bugArr[i].x + bugArr[i].getFrameWidth() / 2 * bugArr[i].scaleRatio),
+			// 	y: (bugArr[i].y + bugArr[i].getFrameWidth() / 2 * bugArr[i].scaleRatio)
+			// }, {
+			// 	x: loc.x,
+			// 	y: loc.y
+			// });
+		
+			// // Check for tap collision with coin		
+			// if (dist < bugArr[i].getFrameWidth() / 2 * bugArr[i].scaleRatio) {
+			// 	bugToDestroy.push(bugArr[i]);
+			// }
 		}
+		//alert(tapX + '+' + tapY + '+' + bugToDestroy[0]);
 		
 		// Destroy tapped bugArr
 		for (i = 0; i < bugToDestroy.length; i += 1) {
@@ -398,8 +436,8 @@ setInterval(setupBugs, 3000);
 		// }
 	}
 
-	canvas.addEventListener("touchstart", tap);
-	canvas.addEventListener("mousedown", tap);
+
+	
 
 	canvas.width = 400;
 	canvas.height = 600;
