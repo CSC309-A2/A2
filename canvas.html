@@ -36,7 +36,7 @@ Your browser does not support the HTML5 canvas tag.
 
 	var context = canvas.getContext('2d');
 
-	
+	var timer = window.setInterval(callAnimation, 30);
 
 	// shim layer with setTimeout fallback
 	(function() {
@@ -154,13 +154,15 @@ Your browser does not support the HTML5 canvas tag.
 	//--------------------BUG---------------------------------//
 
 	var bugArr = new Array();
-	var maxBug = 10;
+	//var maxBug = 10;
 	var angle = 0;
 
 	var request;
 
 
 	var colors = ["#000000", "#A00000", "#FF6600"];
+
+	var randInterval;
 
 	function Bug(xPos, yPos, radius, speed, colour){
 		this.xPos = xPos;
@@ -230,20 +232,22 @@ Your browser does not support the HTML5 canvas tag.
 		if (foodToDestroy != null){
 		destroyFood(foodToDestroy);
 		}	
-
+		randInterval = Math.floor((Math.random()*2 )+1);
 	};
 
+	
 	function setupBugs(){
 		
 			var randomX = Math.floor((Math.random()*399) +1);
-			var Y = -20;
+			var Y = -5;
 			var radius = 5;
 			var speed = 1;
 			
 			var theBug = new Bug(randomX, Y, radius, speed);
 			bugArr.push(theBug);
 
-		
+			
+
 			drawAndUpdate();
 	}
 
@@ -255,17 +259,24 @@ Your browser does not support the HTML5 canvas tag.
 			mybugs.update();
 			//requestAnimFrame(drawAndUpdate);
 			//setTimeout(mybugs.update, 100);
+
 	}
 	
-	request = requestAnimationFrame(drawAndUpdate);
+	
 	//if it reach destination coordinates, stop the animation frame??
 
 	//
 }
+
+//----NOTES------//
+//still havent figure out how to set random time for entering the screen yet!!!!
 setupBugs();
 setInterval(setupBugs, 3000);
 
+	function callAnimation(){
 
+		request = requestAnimationFrame(drawAndUpdate);
+	}
 //stop interval after 60 sec?or after the foods gone!
 	
 
@@ -443,7 +454,7 @@ setInterval(setupBugs, 3000);
 	canvas.width = 400;
 	canvas.height = 600;
 	
-	//THERE IS NO FUNCTION TO START THIS!!!!
+
 
 	
 	
