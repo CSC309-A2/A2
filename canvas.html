@@ -386,6 +386,7 @@ setInterval(setupBugs, 3000);
 	
 	function tap(e){
 
+		//some of these var are not used
 		var i;
 		var loc = {};
 		var dist;
@@ -395,8 +396,8 @@ setInterval(setupBugs, 3000);
 		var tapY = e.targetTouches ? e.targetTouches[0].pageY : e.pageY;
 		var canvasScaleRatio = canvas.width / canvas.offsetWidth;
 
-		loc.x = (tapX - pos.x) * canvasScaleRatio;
-		loc.y = (tapY - pos.y) * canvasScaleRatio;
+		//loc.x = (tapX - pos.x) * canvasScaleRatio;
+		//loc.y = (tapY - pos.y) * canvasScaleRatio;
 
 		//----==------//
 
