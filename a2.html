@@ -2,17 +2,16 @@
 <html>
 <head>
         <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
-        <script src="script.js"></script>
     </head>
     <body>
         <div id="start_page">
             <h2>TAP TAP BUG</h2>
-            
+
             <p>Level: 
                 1<input type="radio" name="radio_button" id="level1" unchecked onMouseDown="this.__chk = this.checked" onClick="select_one()"> 
                 2<input type="radio" name="radio_button" id="level2" unchecked onMouseDown="this.__chk = this.checked" onClick="select_one()"></p>
             
-            <input type = "button" id="start_button" onclick="start_game(); countdown();" value="START">
+            <input type = "button" id="start_button" onclick="start_game(); timerreset(); timercountdown();" value="START">
             
             <p>High score: <input type="text" id="high_score" size="5"></p>
         </div>
@@ -20,14 +19,22 @@
         <div id="game_page">
         
             <div id = timer>
-                    <input id="minutes"  style="width: 11px; border: none; background-color: none;">:
-                    <input id="seconds"  style="width: 13px; border: none; background-color: none;"/>
+                    0:<span id = "timespan"></span>
             </div>
-            
-            <p class="pause"><input type="button" id="Pause" onclick="pause()" value="PAUSE"></p>
-
+            <p class="pause"><input type="button" id="Pause" onclick="timerpause()" value="PAUSE"></p>
             <p class="score">Score: <input type="text" id="score" size="5"></p>
                                                             
-        <div class="line_separator"></div>   
+            <div class="line_separator"></div>
+            
+            <div id="canvasesdiv">
+                <canvas id="canvas2">
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas>
+                <canvas id="canvas">
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas>
+                <script src="script.js"></script>
+            </div>
+        </div>
     </body>
 </html>

@@ -12,17 +12,7 @@
     width: 400px;
     clear: both;
     display: none;
-}
-
-
-.line_separator{
-    position: absolute;
-    width:400px;
-    border-bottom:2px solid black;
-    height:1px; 
-    padding-top:5px;
-    margin-top:50px;
-    margin-bottom:5px;
+    z-index: -2;
 }
 
 #timer{
@@ -34,12 +24,49 @@
 
 .pause{
     float: left;
-    width: 33.33333%;
+    width: 72.5%;
     text-align: center;
+    z-index: 2;
+    position: absolute;
 }
 
 .score{
     float: right;
     width: 33.33333%;
     text-align:right;
+}
+
+#canvas{
+    width:400px;
+    height:600px;
+    border: 1px solid black;
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+    margin-top: 50px;
+}
+
+#canvas2{
+    width:400px;
+    height:600px;
+    border: 1px solid black;
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+    margin-top: 50px;
+}
+
+#canvasesdiv{
+    position:relative; 
+    width: 400px; 
+    height: 600px;
+}
+
+.line_separator{
+    position: absolute;
+    width: 400px;
+    border-bottom: 2px solid black;
+    height: 1px; 
+    margin-top: 50px;
+    margin-bottom: 5px;
 }
