@@ -27,7 +27,7 @@ function confirmBox(){
 
 /* FUNCTIONS FOR TIMER */
 
-    var CCOUNT = 10;
+    var CCOUNT = 60;
     
     var t, count;
 
@@ -62,6 +62,7 @@ function confirmBox(){
             clearTimeout(t);
             document.getElementById('Pause').value="RESUME";
             flagTimer='pause';
+
         }
         else {
             flagTimer='resume';
@@ -88,8 +89,33 @@ function confirmBox(){
     var context2 = canvas2.getContext('2d');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-    var timer = window.setInterval(callAnimation, 30);
+    var foodCoord = new Array();
+    var foodArray = new Array();
+    var score = 0;
+    var food1Pos = {
+        'x' : Math.floor((Math.random() * 70) + 0),
+        'y' : Math.floor((Math.random() * 260) + 300)
+    };
+    var food2Pos = {
+        'x' : Math.floor((Math.random() * 70) + 75),
+        'y' : Math.floor((Math.random() * 260) + 300)
+    };
+    var food3Pos = {
+        'x' : Math.floor((Math.random() * 75) + 160),
+        'y' : Math.floor((Math.random() * 260) + 300)
+    };
+    var food4Pos = {
+        'x' : Math.floor((Math.random() * 75) + 250),
+        'y' : Math.floor((Math.random() * 260) + 300)
+    };
+    var food5Pos = {
+        'x' : Math.floor((Math.random() * 30) + 339),
+        'y' : Math.floor((Math.random() * 260) + 300)
+    };
 
+    function init(){
+       var timer = window.setInterval(callAnimation, 30);
+    }
     // shim layer with setTimeout fallback
     (function() {
     // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -127,45 +153,28 @@ function confirmBox(){
 
         canvas.addEventListener("touchstart", tap);
         canvas.addEventListener("mousedown", tap);
+        drawFood();
     }());
 
-    var foodCoord = new Array();
-    var foodArray = new Array();
-    var food1Pos = {
-        'x' : Math.floor((Math.random() * 70) + 0),
-        'y' : Math.floor((Math.random() * 260) + 300)
-    };
-    var food2Pos = {
-        'x' : Math.floor((Math.random() * 70) + 75),
-        'y' : Math.floor((Math.random() * 260) + 300)
-    };
-    var food3Pos = {
-        'x' : Math.floor((Math.random() * 75) + 160),
-        'y' : Math.floor((Math.random() * 260) + 300)
-    };
-    var food4Pos = {
-        'x' : Math.floor((Math.random() * 75) + 250),
-        'y' : Math.floor((Math.random() * 260) + 300)
-    };
-    var food5Pos = {
-        'x' : Math.floor((Math.random() * 30) + 339),
-        'y' : Math.floor((Math.random() * 260) + 300)
-    };
+    
 
     function drawFood(){
-        var donut1 =new Image() 
+
+
+
+        var donut1 =new Image() ;
         donut1.src= "donut1.png";
         context2.drawImage(donut1,food1Pos.x, food1Pos.y, 40, 40); 
-        var donut2 =new Image() 
+        var donut2 =new Image() ;
         donut2.src= "donut2.png";
         context2.drawImage(donut2,food2Pos.x, food2Pos.y, 40, 40); 
-        var donut3 =new Image() 
+        var donut3 =new Image() ;
         donut3.src= "donut3.png";
         context2.drawImage(donut3,food3Pos.x, food3Pos.y, 40, 40); 
-        var donut4 =new Image() 
+        var donut4 =new Image() ;
         donut4.src= "donut4.png";
         context2.drawImage(donut4,food4Pos.x, food4Pos.y, 40, 40); 
-        var donut5 =new Image() 
+        var donut5 =new Image() ;
         donut5.src= "donut5.png";
         context2.drawImage(donut5,food5Pos.x, food5Pos.y, 40, 40); 
 
@@ -187,7 +196,7 @@ function confirmBox(){
         this.y = y;
     }
 
-    drawFood();
+    //drawFood();
 
     /* FUNCTIONS TO SETUP/ANIMATE THE BUG */
 
@@ -195,7 +204,7 @@ function confirmBox(){
     //var maxBug = 10;
     var angle = 0;
     var request;
-    var colors = ["#000000", "#A00000", "#FF6600"];
+    var colors = ["#000000", "#F30B0B", "#FF6600"];
     var randInterval;
 
     function Bug(xPos, yPos, radius, speed, colour){
@@ -225,21 +234,37 @@ function confirmBox(){
             // this.xPos +=1;
             // this.yPos +=1;
             // }else{
+        var theSpeed = null;
+        var orangeSpeed = 1.5 ;
+        var redSpeed = 1.25 * orangeSpeed;
+        var blackSpeed = 2 * orangeSpeed;
+        context.fillStyle = this.colour;
+
+        if (this.colour == "#000000"){
+          theSpeed = blackSpeed;
+        } 
+        else if (this.colour == "#F30B0B"){
+          theSpeed = redSpeed;
+        } else {
+          theSpeed = orangeSpeed;
+        }
+
+
 
             if (this.xPos < (minDistance.x +20)){
-                this.xPos+=0.5 ;
+                this.xPos+=theSpeed ;
             } 
 
             //go left
             else{
-                this.xPos-=0.5 ;
+                this.xPos-=theSpeed ;
             }
 
             if (this.yPos < (minDistance.y +20)){
-                 this.yPos+=0.5 ;
+                 this.yPos+=theSpeed ;
             }
             else{
-                this.yPos-=0.5;
+                this.yPos-=theSpeed ;
             }
         // }
             context.beginPath();
@@ -270,7 +295,7 @@ function confirmBox(){
 
             context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
 
-        context.fillStyle = this.colour;
+        
         //later -- set up speed based on color!!!!
         context.stroke();
         context.fill();
@@ -283,7 +308,7 @@ function confirmBox(){
         if (foodToDestroy != null){
         destroyFood(foodToDestroy);
         }
-        randInterval = Math.floor((Math.random()*2 )+1);
+        //randInterval = Math.floor((Math.random()*2 )+1);
     };
 
 
@@ -390,19 +415,53 @@ function confirmBox(){
        return pos;
     }
 
+
+document.getElementById("score").innerHTML = score;
+    function addScore(bug){
+      var black = "#000000";
+        var orange = "#ff6600";
+        var red = "#F30B0B";
+        
+
+        if (bug.colour == black){
+                  score += 5;
+                }
+                else if (bug.colour == red){
+                  score += 3;
+                }
+                else{
+                  score += 1;
+                }
+
+        
+    }
+
     function destroyBug (bug) {
         var i;
+         
+                
+
         for (i = 0; i < bugArr.length; i += 1) {
-            if (bugArr[i] === bug) {
+            
+
                 setTimeout(function(){
                     cancelRequestAnimFrame(request);                
                 }, 1*1000)
-                bugArr[i];
+
+                if (bugArr[i] === bug) {
+                
+
+                //bugArr[i];
+               // addScore(bug);
                 bugArr[i] = null;
                 bugArr.splice(i, 1);
+                
+
                 break;
             }
+
         }
+
     }
 
     function distance (p1, p2) {
@@ -422,9 +481,10 @@ function confirmBox(){
         var dist;
         var bugToDestroy = [];
         pos = getElementPosition(canvas);
-        var tapX = e.targetTouches ? e.targetTouches[0].pageX : e.pageX;
-        var tapY = e.targetTouches ? e.targetTouches[0].pageY : e.pageY;
+        var tapX = e.clientX;
+        var tapY = e.clientY -50;
         var canvasScaleRatio = canvas.width / canvas.offsetWidth;
+        
 
         //loc.x = (tapX - pos.x) * canvasScaleRatio;
         //loc.y = (tapY - pos.y) * canvasScaleRatio;
@@ -434,7 +494,9 @@ function confirmBox(){
         for (i = 0; i < bugArr.length; i += 1) {
             if (between(tapX, bugArr[i].xPos-10, bugArr[i].xPos+20) && between(tapY, bugArr[i].yPos-10, bugArr[i].yPos+20)){
                 bugToDestroy.push(bugArr[i]);
+
             }
+
             // Distance between tap and coin
             // dist = distance({
             // x: (bugArr[i].x + bugArr[i].getFrameWidth() / 2 * bugArr[i].scaleRatio),
@@ -456,15 +518,17 @@ function confirmBox(){
 
             //score += parseInt(bugToDestroy[i].scaleRatio * 10, 10);
             destroyBug(bugToDestroy[i]);
+            addScore(bugToDestroy[i]);
+           // addScore(bugToDestroy[i]);
             //setTimeout(spawnCoin, 1000);
+           
         }
 
-        // if (bugToDestroy.length) {
-        // document.getElementById("score").innerHTML = score;
-        // }
+         if (bugToDestroy.length) {
+        document.getElementById("score").innerHTML = score;
+         }
     }
 
     canvas.width = 400;
     canvas.height = 600;
 
-//THERE IS NO FUNCTION TO START THIS!!!!
