@@ -3,12 +3,23 @@ function select_one(radio_button){
         this.checked = false
 }
 
-var game_page = document.getElementById('game_page');    var start_page = document.getElementById('start_page');
+var game_page = document.getElementById('game_page');    
+var start_page = document.getElementById('start_page');
+var start_button = document.getElementById('start_button');
+var level_1 = document.getElementById('level1');
+var level_2 = document.getElementById('level2');
 
 function start_game(start_button){
-    var start_button = document.getElementById('start_button');
-    game_page.style.display = 'block';
-    start_page.style.display = 'none';
+    if (level_1.checked == true || level_2.checked == true){
+        start_page.style.display = 'none';
+        game_page.style.display = 'block';
+        timerreset(); 
+        timercountdown(); 
+        init();
+    }
+    else{
+        window.alert('Please select a level to continue.');
+    }
 }
 
 function confirmBox(){
@@ -18,7 +29,7 @@ function confirmBox(){
         start_page.style.display = 'none';
         timerreset();
         timercountdown();
-        setupBugs();
+        init();
     } else{
         game_page.style.display = 'none';
         start_page. style.display = 'block';
@@ -156,11 +167,7 @@ function confirmBox(){
         drawFood();
     }());
 
-    
-
     function drawFood(){
-
-
 
         var donut1 =new Image() ;
         donut1.src= "donut1.png";
@@ -248,9 +255,6 @@ function confirmBox(){
         } else {
           theSpeed = orangeSpeed;
         }
-
-
-
             if (this.xPos < (minDistance.x +20)){
                 this.xPos+=theSpeed ;
             } 
@@ -416,24 +420,20 @@ function confirmBox(){
     }
 
 
-document.getElementById("score").innerHTML = score;
+    document.getElementById("score").innerHTML = score;
     function addScore(bug){
-      var black = "#000000";
+        var black = "#000000";
         var orange = "#ff6600";
         var red = "#F30B0B";
-        
-
         if (bug.colour == black){
-                  score += 5;
-                }
-                else if (bug.colour == red){
-                  score += 3;
-                }
-                else{
-                  score += 1;
-                }
-
-        
+            score += 5;
+        }
+        else if (bug.colour == red){
+            score += 3;
+        }
+        else{
+            score += 1;
+        }
     }
 
     function destroyBug (bug) {
