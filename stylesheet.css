@@ -28,15 +28,11 @@
     text-align: center;
     z-index: 2;
     position: absolute;
+    
 }
 
-.score{
-    float: right;
-    width: 33.33333%;
-    text-align:right;
-}
 
-#canvas{
+#canvas2{
     width:400px;
     height:600px;
     border: 1px solid black;
@@ -45,8 +41,7 @@
     left: 0px;
     margin-top: 50px;
 }
-
-#canvas2{
+#canvas{
     width:400px;
     height:600px;
     border: 1px solid black;
@@ -69,4 +64,17 @@
     height: 1px; 
     margin-top: 50px;
     margin-bottom: 5px;
+}
+
+#score {
+  
+  text-align: right;
+  color: #000000;
+  font-weight: bold;
+  font-size: 20px;
+  float: right;
+  
+}
+
+  
 }
