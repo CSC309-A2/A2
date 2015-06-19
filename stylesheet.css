@@ -12,7 +12,6 @@
     width: 400px;
     clear: both;
     display: none;
-    z-index: -2;
 }
 
 #timer{
@@ -24,10 +23,10 @@
 
 .pause{
     float: left;
-    width: 72.5%;
+    width: 400px;
     text-align: center;
+    position: fixed;
     z-index: 2;
-    position: absolute; 
 }
 
 #canvas2{
@@ -39,6 +38,7 @@
     left: 0px;
     margin-top: 50px;
 }
+
 #canvas{
     width:400px;
     height:600px;
