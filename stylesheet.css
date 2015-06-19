@@ -27,10 +27,8 @@
     width: 72.5%;
     text-align: center;
     z-index: 2;
-    position: absolute;
-    
+    position: absolute; 
 }
-
 
 #canvas2{
     width:400px;
@@ -67,14 +65,11 @@
 }
 
 #score {
-  
-  text-align: right;
-  color: #000000;
-  font-weight: bold;
-  font-size: 20px;
-  float: right;
-  
-}
-
-  
+    text-align: right;
+    color: #000000;
+    font-weight: bold;
+    font-size: 20px;
+    float: right;
+    width: 33.3333333%;
+    padding-top: 14px;
 }
