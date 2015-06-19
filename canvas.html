@@ -215,15 +215,40 @@ Your browser does not support the HTML5 canvas tag.
 			}
 		// }
 			context.beginPath();
-		context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
+			
+			context.moveTo(this.xPos, this.yPos);
+			context.lineTo(this.xPos+6, this.yPos+6);
+
+			context.moveTo(this.xPos, this.yPos);
+			context.lineTo(this.xPos-6, this.yPos-6);
+
+			context.moveTo(this.xPos, this.yPos);
+			context.lineTo(this.xPos+6, this.yPos-6);
+
+			context.moveTo(this.xPos, this.yPos);
+			context.lineTo(this.xPos-6, this.yPos+6);
+		
+			context.moveTo(this.xPos, this.yPos);
+			context.lineTo(this.xPos+8, this.yPos);
+
+			context.moveTo(this.xPos, this.yPos);
+			context.lineTo(this.xPos, this.yPos+8);
+
+			context.moveTo(this.xPos, this.yPos);
+			context.lineTo(this.xPos-8, this.yPos);
+
+			context.moveTo(this.xPos, this.yPos);
+			context.lineTo(this.xPos, this.yPos-8);
+
+			context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
 
 		
 
-		context.closePath();
-
 		context.fillStyle = this.colour;
 		//later -- set up speed based on color!!!!
+		context.stroke();
 		context.fill();
+		context.closePath();
 
 		//requestAnimFrame(update);
 
@@ -454,7 +479,7 @@ setInterval(setupBugs, 3000);
 	canvas.width = 400;
 	canvas.height = 600;
 	
-
+	//THERE IS NO FUNCTION TO START THIS!!!!
 
 	
 	
