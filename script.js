@@ -242,9 +242,19 @@ function confirmBox(){
             // this.yPos +=1;
             // }else{
         var theSpeed = null;
-        var orangeSpeed = 1.5 ;
+        var orangeSpeed = null;
+
+        if (level_1.checked == true){
+            //level 1 is selected
+            orangeSpeed = 1.5;
+        } else{ 
+            //level 2 is selected
+            orangeSpeed = 2;
+        }
+        
         var redSpeed = 1.25 * orangeSpeed;
         var blackSpeed = 2 * orangeSpeed;
+            
         context.fillStyle = this.colour;
 
         if (this.colour == "#000000"){
