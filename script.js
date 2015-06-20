@@ -26,7 +26,7 @@ var highScore = 0;
 
 function confirmBox(){
     var currentScore = getHighScore();
-    var r = confirm("Game Over!\nRestart Game?\nScore: " + currentScore);
+    var r = confirm("Game Over!\nScore: " + currentScore +"\nRestart Game?");
     if (r == true){
         game_page.style.display = 'block';
         start_page.style.display = 'none';
@@ -74,15 +74,6 @@ function timerreset() {
 };
 
 function timerpause() { 
-    /*if(flagTimer=='resume'){
-        clearTimeout(t);
-        document.getElementById('Pause').value="RESUME";
-        flagTimer='pause';
-    } else {
-        flagTimer='resume';
-        document.getElementById('Pause').value="PAUSE";
-        timercountdown();
-    }*/
     if(flagTimer=='resume'){
         clearTimeout(t);
         document.getElementById('Pause').value="RESUME";
@@ -126,7 +117,7 @@ var food5Pos = {
     'x' : Math.floor((Math.random() * 30) + 339),
     'y' : Math.floor((Math.random() * 260) + 300)};
 
-//initiating program
+/* initializing program */
 function init(){
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -218,7 +209,6 @@ function drawFood(){
 
 /* FUNCTIONS TO SETUP/ANIMATE THE BUG */
 
-//var maxBug = 10;
 var angle = 0;
 var request;
 var colors = ["#000000", "#F30B0B", "#FF6600"];
@@ -228,7 +218,6 @@ function Bug(xPos, yPos, radius, speed, colour){
     this.xPos = xPos;
     this.yPos = yPos;
     this.radius = radius;
-    //this.width = width;
     this.speed = speed;
     this.colour = colors[Math.floor(Math.random() * colors.length)];
     this.counter = 0;
@@ -297,20 +286,15 @@ Bug.prototype.update = function() {
     context.lineTo(this.xPos, this.yPos-8);
 
     context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
-
-    //later -- set up speed based on color!!!!
     context.stroke();
     context.fill();
     context.closePath();
-
-    //requestAnimFrame(update);
-
+    
     var foodToDestroy = null;
     foodToDestroy = getFoodByPos(this.xPos, this.yPos);
     if (foodToDestroy != null){
     destroyFood(foodToDestroy);
     }
-    //randInterval = Math.floor((Math.random()*2 )+1);
 };
 
 
@@ -329,32 +313,17 @@ function drawAndUpdate(){
     for (var i = 0; i < bugArr.length; i++) {
         var mybugs = bugArr[i];
         mybugs.update();
-        //requestAnimFrame(drawAndUpdate);
-        //setTimeout(mybugs.update, 100);
+    }
 }
-
-//if it reach destination coordinates, stop the animation frame??//
-}
-
-//----NOTES------//
-//still havent figure out how to set random time for entering the screen yet!!!!
 
 function callAnimation(){
     request = requestAnimationFrame(drawAndUpdate);
 }
 
-//stop interval after 60 sec?or after the foods gone!
-//to retrieve for loops and foodCoord[].x or y
-
-
-//find the nearest food, only by its x coordinates from the bug
-//we can modify for y later (??)
-
 function findNearestFood(bugX){
     var dist = 600;
     //the coordinates of the food with min distance
     var minCoord = null;
-    //var o = foodCoord[0].x;
 
     for (var i = 0; i < foodCoord.length; i++) {
         if ((Math.abs(bugX - foodCoord[i].x)) < dist) {
@@ -365,12 +334,7 @@ function findNearestFood(bugX){
     return minCoord;
 }
 
-//------DESTROY FOOD------------//
-
-//implement the destroy food function//
-//-- let bug run until it reaches the food, if they eat it let it walk to the end of the screen than put it back to random position in the upper part of the canvas
-// if it reaches the food, destroy it, use another function and let it stop(delay) then let it move towards end of the screen
-
+/* Let bug run until it reaches the food, if they eat it let it walk to the end of the screen than put it back to random position in the upper part of the canvas. If it reaches the food, destroy it, use another function and let it stop(delay) then let it move towards end of the screen */
 function destroyFood(food){
     for (var i = 0; i < foodArray.length; i++){
         if(foodArray[i] === food){
@@ -405,9 +369,8 @@ function between(x, min, max) {
     return x >= min && x <= max;
 }
 
-///-----------------TAP--------------///
+/* FUNCTIONS FOR TAP*/
 
-//modify this
 function getElementPosition (element) {
    var parentOffset,
        pos = {
@@ -422,8 +385,6 @@ function getElementPosition (element) {
    return pos;
 }
 
-
-//document.getElementById("score").innerHTML = score;
 function addScore(bug){
     var black = "#000000";
     var orange = "#ff6600";
@@ -446,8 +407,6 @@ function destroyBug (bug) {
             cancelRequestAnimFrame(request);                
         }, 1*1000)
         if (bugArr[i] === bug) {
-            // bugArr[i];
-            // addScore(bug);
             bugArr[i] = null;
             bugArr.splice(i, 1);
             break;
@@ -466,29 +425,17 @@ var getFrameWidth = function () {
 };
 
 function tap(e){
-    //some of these var are not used
     var i;
-    var loc = {};
-    var dist;
     var bugToDestroy = [];
     pos = getElementPosition(canvas);
     var tapX = e.clientX;
     var tapY = e.clientY -50;
-    var canvasScaleRatio = canvas.width / canvas.offsetWidth;
-
-
-    //loc.x = (tapX - pos.x) * canvasScaleRatio;
-    //loc.y = (tapY - pos.y) * canvasScaleRatio;
-
-    //----==------//
 
     for (i = 0; i < bugArr.length; i += 1) {
         if (between(tapX, bugArr[i].xPos-10, bugArr[i].xPos+20) && between(tapY, bugArr[i].yPos-10, bugArr[i].yPos+20)){
             bugToDestroy.push(bugArr[i]);
         }
     }
-    //alert(tapX + '+' + tapY + '+' + bugToDestroy[0]);
-
     // Destroy tapped bugArr
     for (i = 0; i < bugToDestroy.length; i += 1) {
         destroyBug(bugToDestroy[i]);
@@ -498,7 +445,6 @@ function tap(e){
         document.getElementById("score").innerHTML = score;
     }
 }
-
 
 canvas.width = 400;
 canvas.height = 600;
