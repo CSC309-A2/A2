@@ -96,6 +96,8 @@ function confirmBox(){
 
 
     var canvas2 = document.getElementById('canvas2');
+    canvas2.setAttribute('width', '400');
+  canvas2.setAttribute('height', '600');
     var context2 = canvas2.getContext('2d');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
@@ -184,7 +186,7 @@ function confirmBox(){
 
     function drawFood(){
 
-
+        
 
         var donut1 =new Image() ;
         donut1.src= "donut1.png";
